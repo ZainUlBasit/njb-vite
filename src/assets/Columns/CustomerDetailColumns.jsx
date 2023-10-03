@@ -1,0 +1,63 @@
+export const CustomerDetailColumns = [
+  {
+    id: "drivername",
+    label: "Driver Name",
+    minWidth: 145,
+    align: "left",
+  },
+  {
+    id: "drivercontact",
+    label: "Driver Contact",
+    minWidth: 145,
+    align: "left",
+  },
+  {
+    id: "total",
+    label: "Total",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "cpaid",
+    label: "Paid",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "cdiscount",
+    label: "Discount",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "advance",
+    label: "Advance",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "cloading",
+    label: "Loading",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "cdelivery",
+    label: "Delivery",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "cexpense",
+    label: "Expense",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+];
