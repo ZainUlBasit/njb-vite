@@ -251,7 +251,7 @@ function AccountReport({ Data }) {
                   fontSize: 13,
                 }}
               >
-                {`Steel & Cement Dealer,\nProperty & Developers\nCharsadda, KPK`}
+                {`Nowshera Road Sugar Mill Pump\nCharsadda, KPK`}
               </Text>
             </View>
             {/* Contacts */}

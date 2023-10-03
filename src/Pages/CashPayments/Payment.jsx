@@ -15,12 +15,16 @@ import CustomerDataServices from "../../Services/customer.services";
 import CashPaymentDataServices from "../../Services/cashpayment.servivces";
 import AddingLoader from "../../Components/Loader/AddingLoader";
 import Select from "react-select";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PaymentReport from "../PaymentReport";
+import numberToWords from "number-to-words"; // Import the package
 
 const Payment = () => {
   const Customers = useSelector((state) => state.CustomerReducer.data);
   let Companies = useSelector((state) => state.CompanyReducer.data);
   const dispatch = useDispatch();
   const [Amount, setAmount] = useState("");
+  const [AmountInWords, setAmountInWords] = useState("");
   const [Depositor, setDepositor] = useState("");
   const [CurDate, setDate] = useState("");
   const [Cnic, setCnic] = useState("");
@@ -33,9 +37,11 @@ const Payment = () => {
   const [ProcessLoading, setProcessLoading] = useState(false);
   const Banks = useSelector((state) => state.BankReducer);
   const [CurrentCustomer, setCurrentCustomer] = useState("");
+  const [CurrentName, setCurrentName] = useState("");
   const [CurrentAddress, setCurrentAddress] = useState("");
   const [CurrentContact, setCurrentContact] = useState("");
   const [CurrentRemaining, setCurrentRemaining] = useState(0);
+  const [Method, setMethod] = useState("");
 
   useEffect(() => {
     dispatch(fetchCustomers());
@@ -52,6 +58,27 @@ const Payment = () => {
     };
     setAccNo();
   }, [CurrentBank]);
+
+  useEffect(() => {
+    if (Number(Amount) !== 0) {
+      const amountWords = numberToWords.toWords(Number(Amount), {
+        language: "en", // You can specify the language here
+      });
+      let i = 1;
+      setAmountInWords(() => {
+        let return_value = "";
+        for (let i = 0; i < amountWords.length; i++) {
+          if (
+            i !== Number(amountWords.length) - 1 &&
+            i !== Number(amountWords.length) - 2
+          ) {
+            return_value += amountWords[i];
+          }
+        }
+        return return_value;
+      });
+    }
+  }, [Amount]);
 
   const CustomerBankOptions = [
     { name: "ABL", _id: "1" },
@@ -142,6 +169,30 @@ const Payment = () => {
     }
     setProcessLoading(false);
   };
+
+  useEffect(() => {
+    Customers.map((cus) => {
+      if (cus._id === CustomerId) {
+        setCurrentName(cus.name);
+        setCurrentAddress(cus.address);
+        setCurrentContact(cus.contact);
+      }
+    });
+  }, [CustomerId]);
+
+  useEffect(() => {
+    if (Type === "company") {
+      let BankName = Banks.data.filter((bnk) => bnk._id === CurrentBank);
+      BankName = BankName[0];
+      setMethod(BankName.bankname);
+    } else if (Type === "customer") {
+      let BankName = CustomerBankOptions.filter(
+        (bnk) => bnk._id === CurrentBank
+      );
+      BankName = BankName[0];
+      setMethod(BankName.name);
+    }
+  }, [CurrentBank]);
 
   return (
     <>
@@ -262,30 +313,27 @@ const Payment = () => {
             <div className="mt-[10px] mb-[10px]">
               <PDFDownloadLink
                 document={
-                  <Testing
+                  <PaymentReport
                     arears={CurrentRemaining}
-                    paid={Paid}
+                    paid={Amount}
                     date={CurDate}
                     name={CurrentName}
                     address={CurrentAddress}
                     contact={CurrentContact}
+                    depositor={Depositor}
+                    method={Method}
+                    amount_in_words={AmountInWords}
                   />
                 }
-                fileName={`${CurrentBillNo}`}
+                fileName={`Payment Report`}
               >
                 <button
-                  className="bg-white text-[#032248] px-[20px] mobbtn:px-[14px] py-[10px] font-bold font-[raleway] text-[1.2rem] border-[2px] border-white hover:rounded-[8px] hover:bg-[#032248] hover:text-white transition-all duration-700 select-none my-[5px]"
-                  // onClick={() => setBillPrinted(true)}
+                  className="hover:bg-[#fff] hover:text-[#032248] hover:rounded-[10px]  border-[2px] border-[#032248] bg-[#032248] text-white py-[10px] px-[15px] w-[250px] text-[1rem] font-bold font-[raleway] transition-all duration-700"
+                  onClick={onSubmit}
                 >
-                  Print
+                  Add Payment
                 </button>
               </PDFDownloadLink>
-              {/* <button
-                className="hover:bg-[#fff] hover:text-[#032248] hover:rounded-[10px]  border-[2px] border-[#032248] bg-[#032248] text-white py-[10px] px-[15px] w-[250px] text-[1rem] font-bold font-[raleway] transition-all duration-700"
-                // onClick={onSubmit}
-              >
-                Add Payment
-              </button> */}
             </div>
           )}
         </div>

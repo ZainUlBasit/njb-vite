@@ -21,6 +21,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import AddingLoader from "../../Components/Loader/AddingLoader";
 import customerServices from "../../Services/customer.services";
+import Select from "react-select";
 
 const AddNewBill = () => {
   const [CurrentCustomer, setCurrentCustomer] = useState("");
@@ -195,16 +196,20 @@ const AddNewBill = () => {
           {/* Customer Detail */}
           <div className="w-full select-none">
             <div className="w-full text-center py-[15px] font-[raleway] font-bold uppercase text-[1.8rem]">
-              Customer Detail
+              Add New Bill
             </div>
             <div className="w-full bg-white h-[2px]"></div>
             <div className="w-[100%] flex flex-wrap flex-row justify-center items-center bg-white border-x-[#032248] border-[2px] pt-[20px]">
               <div className="w-[90%] min-w-[300px] flex justify-center">
-                <SimpleSelectComp
-                  value={CurrentCustomer}
-                  setValue={setCurrentCustomer}
-                  label={"Select Customer"}
-                  data={Customers}
+                <Select
+                  options={Customers.map((cust) => {
+                    return {
+                      value: cust._id,
+                      label: cust.name,
+                    };
+                  })}
+                  onChange={(opt) => setCurrentCustomer(opt.value)}
+                  className="w-[90%] mb-[20px] pb-[0px] z-[10] text-black font-bold font-[raleway]"
                 />
               </div>
             </div>

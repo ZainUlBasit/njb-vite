@@ -141,7 +141,7 @@ const ItemReturn = () => {
           {/* Customer Detail */}
           <div className="w-full">
             <div className="w-full text-center py-[15px] font-[raleway] font-bold uppercase text-[1.8rem]">
-              Customer Detail
+              Item Return
             </div>
             <div className="w-full bg-white h-[2px]"></div>
             <div className="w-[100%] flex flex-wrap flex-row justify-center items-center bg-white border-x-[#032248] border-[2px] pt-[20px]">

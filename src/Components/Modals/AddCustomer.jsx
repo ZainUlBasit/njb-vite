@@ -52,7 +52,7 @@ const AddCustomer = ({ open, setOpen }) => {
     setProccessLoading(false);
   };
   return (
-    <CustomModal title={"Add New Company"} open={open} setOpen={setOpen}>
+    <CustomModal title={"Add New Customer"} open={open} setOpen={setOpen}>
       <form className="flex flex-col justify-center items-center">
         <SimpleTextInput
           label="Enter Name"

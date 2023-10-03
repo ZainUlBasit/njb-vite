@@ -109,12 +109,11 @@ const styles = StyleSheet.create({
     paddingLeft: "5px",
   },
   accountInfoWrraper: {
-    width: "220px",
+    width: "400px",
     marginTop: 20,
-    borderBottom: "2px solid gray",
   },
   accountInfoCard: {
-    width: "220px",
+    width: "400px",
     paddingVertical: 3,
     display: "flex",
     flexDirection: "row",
@@ -128,11 +127,11 @@ const styles = StyleSheet.create({
     paddingRight: 3,
   },
   accountInfo: {
-    width: "100px",
+    width: "280px",
     fontFamily: "CustomFont",
     fontWeight: "normal",
     fontSize: "13px",
-    textAlign: "right",
+    textAlign: "left",
   },
   accountGrandWrraper: {
     width: "220px",
@@ -202,7 +201,7 @@ function PaymentReport(props) {
                 marginBottom: 15,
               }}
             >
-              INVOICE
+              RECIEVING
             </Text>
             <View>
               <Text
@@ -221,7 +220,7 @@ function PaymentReport(props) {
                   fontSize: 13,
                 }}
               >
-                {`Steel & Cement Dealer,\nProperty & Developers\nCharsadda, KPK`}
+                {`Nowshera Road Sugar Mill Pump\nCharsadda, KPK`}
               </Text>
             </View>
             {/* Contacts */}
@@ -362,7 +361,7 @@ function PaymentReport(props) {
                 {props.date}
               </Text>
             </View>
-            {/* Bill Date */}
+            {/* Bill Depositor */}
             <View
               style={{
                 display: "flex",
@@ -392,8 +391,49 @@ function PaymentReport(props) {
                 {props.depositor}
               </Text>
             </View>
+            {/* Bill Method */}
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "190px",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "right",
+                  fontFamily: "CustomFont",
+                  fontWeight: "bold",
+                  fontSize: 13,
+                  width: "110px",
+                }}
+              >
+                Method:
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "CustomFont",
+                  fontWeight: "normal",
+                  fontSize: 13,
+                  paddingLeft: 3,
+                }}
+              >
+                {props.method}
+              </Text>
+            </View>
           </View>
         </View>
+        {/* ************************************** */}
+        {/* Bottom Line */}
+        {/* ************************************** */}
+        <View
+          style={{
+            width: "100%",
+            height: "2px",
+            backgroundColor: "#032248",
+            marginTop: "10px",
+          }}
+        ></View>
         {/* Body */}
         <View style={{ flex: 9 }}>
           {/* Payment */}
@@ -402,7 +442,7 @@ function PaymentReport(props) {
             style={{
               width: "100%",
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: "flex-start",
             }}
           >
             {/* Inner Wrapper */}
@@ -416,8 +456,12 @@ function PaymentReport(props) {
                 <Text style={styles.accountInfo}>{props.paid}/-</Text>
               </View>
               <View style={styles.accountInfoCard}>
+                <Text style={styles.accountInfoTitle}>Paid in Words:</Text>
+                <Text style={styles.accountInfo}>{props.amount_in_words} only</Text>
+              </View>
+              <View style={styles.accountInfoCard}>
                 <Text style={styles.accountInfoTitle}>Remaining: </Text>
-                <Text style={styles.accountInfo}>{props.remaining}/-</Text>
+                <Text style={styles.accountInfo}>{Number(props.arears) - Number(props.paid)}/-</Text>
               </View>
             </View>
           </View>

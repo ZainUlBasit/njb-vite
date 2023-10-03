@@ -9,6 +9,7 @@ import { fetchCustomers } from "../../store/Slices/CustomerSlice";
 import EditCustomer from "../../Components/Modals/EditCustomer";
 import DataLoader from "../../Components/Loader/DataLoader";
 import SearchInput from "../../Components/Input/SearchInput";
+import customerServices from "../../Services/customer.services";
 
 const Customer = () => {
   const Customers = useSelector((state) => state.CustomerReducer.data);
@@ -28,6 +29,23 @@ const Customer = () => {
         <DataLoader />
       ) : (
         <>
+          <button
+            onClick={async () => {
+              let data = await customerServices.getAllCustomers();
+              data = data.docs.map((doc) => ({ ...doc.data(), _id: doc.id }));
+              data.map(async (dt) => {
+                console.log(dt.total);
+                console.log(dt.remaining);
+                // await customerServices.updateCustomerTotalRemaining(
+                  // dt._id,
+                  // Number(dt.total).toFixed(2),
+                  // Number(dt.remaining).toFixed(2)
+                // );
+              });
+            }}
+          >
+            Update Data
+          </button>
           <SearchInput value={FilterText} setValue={setFilterText} />
           <TableComp
             title="CUSTOMERS INFO"

@@ -76,6 +76,15 @@ class CustomerDataServices {
   addCustomer = (newCustomer) => {
     return addDoc(customerCollectionRef, newCustomer);
   };
+
+  updateCustomerTotalRemaining = (id, Total, Remaining) => {
+    const customerDoc = doc(db, "customer", id);
+    return updateDoc(customerDoc, {
+      total: Total,
+      remaining: Remaining,
+    });
+  };
+
   // Update customer
   updateCustomer = (id, updatedCustomer) => {
     const customerDoc = doc(db, "customer", id);

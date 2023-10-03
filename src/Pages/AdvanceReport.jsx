@@ -109,12 +109,11 @@ const styles = StyleSheet.create({
     paddingLeft: "5px",
   },
   accountInfoWrraper: {
-    width: "250px",
+    width: "300px",
     marginTop: 20,
-    borderBottom: "2px solid gray",
   },
   accountInfoCard: {
-    width: "250px",
+    width: "300px",
     paddingVertical: 3,
     display: "flex",
     flexDirection: "row",
@@ -123,25 +122,25 @@ const styles = StyleSheet.create({
     fontFamily: "CustomFont",
     fontWeight: "bold",
     fontSize: "13px",
-    width: "150px",
+    width: "120px",
     textAlign: "right",
     paddingRight: 3,
   },
   accountInfo: {
-    width: "100px",
+    width: "180px",
     fontFamily: "CustomFont",
     fontWeight: "normal",
     fontSize: "13px",
-    textAlign: "right",
+    textAlign: "left",
   },
   accountGrandWrraper: {
-    width: "250px",
+    width: "220px",
     paddingVertical: 5,
   },
 });
 
 // Create Document Component
-function ReturnReport(props) {
+function AdvanceReport(props) {
   return (
     <Document>
       {/*render a single page*/}
@@ -202,7 +201,7 @@ function ReturnReport(props) {
                 marginBottom: 15,
               }}
             >
-              RETURN
+              ADVANCE
             </Text>
             <View>
               <Text
@@ -289,7 +288,7 @@ function ReturnReport(props) {
           }}
         ></View>
         {/* ************************************** */}
-        {/* Bill Detail */}
+        {/* Payment Detail */}
         {/* ************************************** */}
         <View
           style={{
@@ -309,7 +308,7 @@ function ReturnReport(props) {
                 fontSize: 13,
               }}
             >
-              {props.cName}
+              {props.name}
             </Text>
             <Text
               style={{
@@ -318,7 +317,7 @@ function ReturnReport(props) {
                 fontSize: 13,
               }}
             >
-              {props.cContact}
+              {props.contact}
             </Text>
             <Text
               style={{
@@ -327,41 +326,11 @@ function ReturnReport(props) {
                 fontSize: 13,
               }}
             >
-              {props.cAddress}
+              {props.address}
             </Text>
           </View>
           {/* Right Side */}
           <View>
-            {/* Invoice Number */}
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "190px",
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "right",
-                  fontFamily: "CustomFont",
-                  fontWeight: "bold",
-                  fontSize: 13,
-                  width: "110px",
-                }}
-              >
-                Invoice #:
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "CustomFont",
-                  fontWeight: "normal",
-                  fontSize: 13,
-                  paddingLeft: 3,
-                }}
-              >
-                {props.bBillNo}
-              </Text>
-            </View>
             {/* Bill Date */}
             <View
               style={{
@@ -389,181 +358,48 @@ function ReturnReport(props) {
                   paddingLeft: 3,
                 }}
               >
-                {props.bDate}
-              </Text>
-            </View>
-            {/* Driver Name */}
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "190px",
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "right",
-                  fontFamily: "CustomFont",
-                  fontWeight: "bold",
-                  fontSize: 13,
-                  width: "110px",
-                }}
-              >
-                Driver Name:
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "CustomFont",
-                  fontWeight: "normal",
-                  fontSize: 13,
-                  paddingLeft: 3,
-                }}
-              >
-                {props.DriverName}
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "190px",
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "right",
-                  fontFamily: "CustomFont",
-                  fontWeight: "bold",
-                  fontSize: 13,
-                  width: "110px",
-                }}
-              >
-                Driver Contact:
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "CustomFont",
-                  fontWeight: "normal",
-                  fontSize: 13,
-                  paddingLeft: 3,
-                }}
-              >
-                {props.DriverContact}
+                {props.date}
               </Text>
             </View>
           </View>
         </View>
+        {/* ************************************** */}
+        {/* Bottom Line */}
+        {/* ************************************** */}
+        <View
+          style={{
+            width: "100%",
+            height: "2px",
+            backgroundColor: "#032248",
+            marginTop: "10px",
+          }}
+        ></View>
         {/* Body */}
         <View style={{ flex: 9 }}>
-          {/* Table */}
+          {/* Payment */}
+          {/* Main Wrapper */}
           <View
             style={{
               width: "100%",
-              height: "100%",
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginTop: "10px",
+              alignItems: "flex-start",
             }}
           >
-            {/* Row Header */}
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                borderBottom: "2px solid #032248",
-              }}
-              fixed
-            >
-              {/* Description */}
-              <Text style={styles.header1}>Items</Text>
-              {/* qty */}
-              <Text style={styles.header2}>Quantity</Text>
-              {/* price */}
-              <Text style={styles.header3}>Unit Price</Text>
-              {/* amount */}
-              <Text style={styles.header4}>Amount</Text>
-            </View>
-            {/* Rows Data */}
-            {props.Data.map((data) => {
-              return (
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    borderTop: "0px solid black",
-                  }}
-                >
-                  {/* Description */}
-                  <Text style={styles.cell1}>{data.name}</Text>
-                  {/* qty */}
-                  <Text style={styles.cell2}>{data.qty}</Text>
-                  {/* price */}
-                  <Text style={styles.cell3}>{data.price}</Text>
-                  {/* amount */}
-                  <Text style={styles.cell4}>{data.amount}</Text>
-                </View>
-              );
-            })}
-            {/* ************************************* */}
-            {/* Bottom Line */}
-            {/* ************************************* */}
-            <View
-              style={{
-                width: "100%",
-                height: "2px",
-                backgroundColor: "#032248",
-                marginTop: "10px",
-              }}
-            ></View>
-            {/* ********************************************* */}
-            {/* Bill Account Info */}
-            {/* ********************************************* */}
-            {/* Main Wrapper */}
-            <View
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "flex-end",
-              }}
-            >
-              {/* Inner Wrapper */}
-              <View style={styles.accountInfoWrraper}>
-                <View style={styles.accountInfoCard}>
-                  <Text style={styles.accountInfoTitle}>Current Total: </Text>
-                  <Text style={styles.accountInfo}>{props.cTotal}/-</Text>
-                </View>
-                <View style={styles.accountInfoCard}>
-                  <Text style={styles.accountInfoTitle}>Expense Charges:</Text>
-                  <Text style={styles.accountInfo}>-{props.cExpense}/-</Text>
-                </View>
-                <View style={styles.accountInfoCard}>
-                  <Text style={styles.accountInfoTitle}>Arears:</Text>
-                  <Text style={styles.accountInfo}>+{props.cArears}/-</Text>
-                </View>
-                <View style={styles.accountInfoCard}>
-                  <Text style={styles.accountInfoTitle}>Discount: </Text>
-                  <Text style={styles.accountInfo}>+{props.cDiscount}/-</Text>
-                </View>
+            {/* Inner Wrapper */}
+            <View style={styles.accountInfoWrraper}>
+              <View style={styles.accountInfoCard}>
+                <Text style={styles.accountInfoTitle}>Amount:</Text>
+                <Text style={styles.accountInfo}>{props.amount}/-</Text>
               </View>
-              <View style={styles.accountGrandWrraper}>
-                <View style={styles.accountInfoCard}>
-                  <Text style={styles.accountInfoTitle}>
-                    Recieved by Customer:{" "}
-                  </Text>
-                  <Text style={styles.accountInfo}>-{props.cPaid}/-</Text>
-                </View>
-                <View style={styles.accountInfoCard}>
-                  <Text style={styles.accountInfoTitle}>Balance!: </Text>
-                  <Text style={styles.accountInfo}>
-                    {Number(props.cExpense) +
-                      Number(props.cArears) -
-                      Number(props.cDiscount) -
-                      Number(props.cPaid) -
-                      Number(props.cTotal)}
-                    /-
-                  </Text>
-                </View>
+              <View style={styles.accountInfoCard}>
+                <Text style={styles.accountInfoTitle}>Amount In Words:</Text>
+                <Text style={styles.accountInfo}>
+                  {props.amount_in_words} only
+                </Text>
+              </View>
+              <View style={styles.accountInfoCard}>
+                <Text style={styles.accountInfoTitle}>Description:</Text>
+                <Text style={styles.accountInfo}>{props.desc}</Text>
               </View>
             </View>
           </View>
@@ -572,4 +408,4 @@ function ReturnReport(props) {
     </Document>
   );
 }
-export default ReturnReport;
+export default AdvanceReport;

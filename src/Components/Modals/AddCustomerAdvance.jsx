@@ -11,11 +11,50 @@ import AddingLoader from "../Loader/AddingLoader";
 import moment from "moment";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import AdvanceReport from "../../Pages/AdvanceReport";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import numberToWords from "number-to-words"; // Import the package
 
 const AddCustomerAdvance = ({ open, setOpen }) => {
   const [ID, setID] = useState("");
   const [Advance, setAdvance] = useState("");
+  const [AmountInWords, setAmountInWords] = useState("");
   const [Desc, setDesc] = useState("");
+  // customer info
+  const [CurrentName, setCurrentName] = useState("");
+  const [CurrentAddress, setCurrentAddress] = useState("");
+  const [CurrentContact, setCurrentContact] = useState("");
+  useEffect(() => {
+    Customers.map((cus) => {
+      if (cus._id === ID) {
+        setCurrentName(cus.name);
+        setCurrentAddress(cus.address);
+        setCurrentContact(cus.contact);
+      }
+    });
+  }, [ID]);
+
+  useEffect(() => {
+    if (Number(Advance) !== 0) {
+      const amountWords = numberToWords.toWords(Number(Advance), {
+        language: "en", // You can specify the language here
+      });
+      let i = 1;
+      setAmountInWords(() => {
+        let return_value = "";
+        for (let i = 0; i < amountWords.length; i++) {
+          if (
+            i !== Number(amountWords.length) - 1 &&
+            i !== Number(amountWords.length) - 2
+          ) {
+            return_value += amountWords[i];
+          }
+        }
+        return return_value;
+      });
+    }
+  }, [Advance]);
+
   const [CurDate, setCurDate] = useState(
     moment(new Date()).format("YYYY-MM-DD")
   );
@@ -93,7 +132,22 @@ const AddCustomerAdvance = ({ open, setOpen }) => {
         <AddingLoader />
       ) : (
         <div className="flex justify-center items-center">
-          <ModalButton title={"add advance"} onClick={onSubmit} />
+          <PDFDownloadLink
+            document={
+              <AdvanceReport
+                date={CurDate}
+                name={CurrentName}
+                address={CurrentAddress}
+                contact={CurrentContact}
+                amount={Advance}
+                amount_in_words={AmountInWords}
+                desc={Desc}
+              />
+            }
+            fileName={`Advance Report`}
+          >
+            <ModalButton title={"add advance"} onClick={onSubmit} />
+          </PDFDownloadLink>
         </div>
       )}
     </CustomModal>
